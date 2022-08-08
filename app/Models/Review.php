@@ -11,7 +11,10 @@ class Review extends Model
 
     protected  $fillable = [
         'review',
-        'rating'
+        'rating',
+        'user_id',
+        'product_id'
+
     ];
      /**
      * Get the product that owns the review.

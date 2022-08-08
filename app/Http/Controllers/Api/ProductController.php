@@ -27,7 +27,7 @@ class ProductController extends Controller
             $imageName = Str::random(32).".".$request->image->getClientOriginalExtension();
 
             // Create Product
-            Product::create([
+            $product = Product::create([
                 'user_id' => auth()->user()->id,
                 'name' => $request->name,
                 'image' => $imageName,
@@ -39,9 +39,7 @@ class ProductController extends Controller
             Storage::disk('public')->put($imageName, file_get_contents($request->image));
 
             // Return Json Response
-            return response()->json([
-                'message' => "Product successfully created."
-            ],200);
+            return response()->json($product, 200);
         } else {
             // Return Json Response
             return response()->json([
@@ -70,12 +68,12 @@ class ProductController extends Controller
     {
             // Find product
             $product = Product::find($id);
+
             if(!$product){
               return response()->json([
                 'message'=>'Product Not Found.'
               ],404);
             }
-
 
             $product->name = $request->name;
             $product->price = $request->price;
@@ -96,15 +94,15 @@ class ProductController extends Controller
                     // Image save in public folder
                     $storage->put($imageName, file_get_contents($request->image));
 
-
-                      // Update Product
-                    $product->save();
-
-                    // Return Json Response
                  }
+
+            // Update Product
+            $product->save();
+
             return response()->json([
                 'message' => "Product successfully updated."
             ],200);
+
 
     }
 

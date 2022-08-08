@@ -28,19 +28,22 @@ class ReviewController extends Controller
             'rating' => 'required|numeric|min:0|max:5',
         ]);
 
-        $findReview = Review::where(['user_id' => auth()->user()->id, 'product_id' => $request->product_id])->first();
+        $userId = auth()->user()->id;
 
-        if ($findReview > 0) {
-            return response()->json(['message' => 'You already reviewed this product']);
-        } else {
-            $review = new Review;
-            $review->review = $request->review;
-            $review->rating = $request->rating;
-            $review->user_id = auth()->user()->id;
-            $product->reviews()->save($review);
+        $findReview = Review::where(['user_id' => $userId, 'product_id' => $product->id])->first();
 
-            return response()->json(['message' => 'Review Added', 'review' => $review]);
+        if($findReview) {
+            return response()->json($this->errorResponse(['message' => 'You already reviewed this product']));
         }
+
+        $review = Review::create([
+            'user_id' => $userId,
+            'product_id' => $product->id,
+            'review' => $request->review,
+            'rating' => $request->rating
+        ]);
+
+        return response()->json($review);
     }
 
     /**
