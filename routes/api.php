@@ -38,13 +38,11 @@ Route::post('reset-password', [NewPasswordController::class, 'reset']);
 
 Route::controller(ProductController::class)->group(function() {
     Route::get('/products', 'index');
-    Route::get('/products', 'show');
+    Route::get('/products/{product}', 'show');
     Route::post('/products','store');
     Route::put('/products/{product}', 'update');
     Route::delete('/products/{product}', 'destroy');
 });
-
-
 
 Route::controller(ReviewController::class)->group(function() {
     Route::post('/review/{product}', 'store');
