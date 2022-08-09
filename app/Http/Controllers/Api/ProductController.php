@@ -100,7 +100,7 @@ class ProductController extends Controller
             $product->save();
 
             return response()->json([
-                'message' => "Product successfully updated."
+                $product
             ],200);
 
 
