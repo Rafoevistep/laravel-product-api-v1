@@ -33,7 +33,7 @@ class ReviewController extends Controller
         $findReview = Review::where(['user_id' => $userId, 'product_id' => $product->id])->first();
 
         if($findReview) {
-            return response()->json($this->errorResponse(['message' => 'You already reviewed this product']));
+            return response()->json(['message' => 'You already reviewed this product']);;
         }
 
         $review = Review::create([
@@ -84,7 +84,7 @@ class ReviewController extends Controller
             return response()->json(['message' => 'Action Forbidden']);
         }
         $review->delete();
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Review Deleted', 'review' => $review]);
     }
 }
 
