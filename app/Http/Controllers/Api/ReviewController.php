@@ -25,11 +25,11 @@ class ReviewController extends Controller
     public function index()
     {
        // All Product
-       $reviews = Review::all();
+       $review = Review::all();
 
        // Return Json Response
        return response()->json([
-          'reviews' => $reviews
+          'review' => $review
        ],200);
     }
 
