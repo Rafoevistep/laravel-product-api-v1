@@ -33,6 +33,22 @@ class ReviewController extends Controller
        ],200);
     }
 
+    public function show($id)
+    {
+        // Product Detail
+        $review =  Review::find($id);
+        if(!$review){
+            return response()->json([
+                'message'=>'Product Not Found.'
+            ], 404);
+        }
+
+        // Return Json Response
+        return response()->json([
+            'review' => $review
+        ],200);
+    }
+
     public function store(Request $request, Product $product)
     {
         $request->validate([
