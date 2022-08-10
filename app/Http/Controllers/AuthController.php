@@ -21,6 +21,35 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+    public function index()
+    {
+       // All Product
+       $user = User::all();
+
+       // Return Json Response
+       return response()->json([
+          'user' => $user
+       ],200);
+    }
+
+    public function show($id)
+    {
+        // Product Detail
+        $user =  User::find($id);
+        if(!$user){
+            return response()->json([
+                'message'=>'User Not Found.'
+            ], 404);
+        }
+
+        // Return Json Response
+        return response()->json([
+            'review' => $user
+        ],200);
+    }
+
+
     public function login(Request $request){
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
