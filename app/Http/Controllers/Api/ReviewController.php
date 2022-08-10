@@ -21,6 +21,18 @@ class ReviewController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
+
+    public function index()
+    {
+       // All Product
+       $reviews = Review::all();
+
+       // Return Json Response
+       return response()->json([
+          'reviews' => $reviews
+       ],200);
+    }
+
     public function store(Request $request, Product $product)
     {
         $request->validate([

@@ -45,6 +45,7 @@ Route::controller(ProductController::class)->group(function() {
 });
 
 Route::controller(ReviewController::class)->group(function() {
+    Route::get('/review', 'index');
     Route::post('/review/{product}', 'store');
     Route::put('/review/{review}', 'update');
     Route::delete('/review/{review}', 'destroy');
