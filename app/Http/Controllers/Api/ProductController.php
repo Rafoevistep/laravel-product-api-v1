@@ -75,32 +75,36 @@ class ProductController extends Controller
             ], 404);
         }
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->description = $request->description;
+        if (auth()->user()->id !== $product->user_id) {
+            return response()->json(['message' => 'Action Forbidden']);
+        }else{
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->description = $request->description;
 
-        if($request->image) {
-            // Public storage
-            $storage = Storage::disk('public');
+            if($request->image) {
+                // Public storage
+                $storage = Storage::disk('public');
 
-            // Old iamge delete
-            if($storage->exists($product->image))
-                $storage->delete($product->image);
+                // Old iamge delete
+                if($storage->exists($product->image))
+                    $storage->delete($product->image);
 
-            // Image name
-            $imageName = Str::random(32).".".$request->image->getClientOriginalExtension();
-            $product->image = $imageName;
+                // Image name
+                $imageName = Str::random(32).".".$request->image->getClientOriginalExtension();
+                $product->image = $imageName;
 
-            // Image save in public folder
-            $storage->put($imageName, file_get_contents($request->image));
+                // Image save in public folder
+                $storage->put($imageName, file_get_contents($request->image));
+            }
+
+            // Update Product
+            $product->save();
+
+            return response()->json([
+                $product
+            ],200);
         }
-
-        // Update Product
-        $product->save();
-
-        return response()->json([
-            $product
-        ],200);
     }
 
     public function destroy($id)
@@ -113,7 +117,10 @@ class ProductController extends Controller
           ],404);
         }
 
-        // Public storage
+        if (auth()->user()->id !== $product->user_id) {
+            return response()->json(['message' => 'Action Forbidden']);
+        }else{
+            // Public storage
         $storage = Storage::disk('public');
 
         // Iamge delete
@@ -127,5 +134,6 @@ class ProductController extends Controller
         return response()->json([
             'message' => "Product successfully deleted."
         ],200);
+        }
     }
 }
