@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Requests\ProductStoreRequest;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
        // All Product
        $products = Product::all();
@@ -21,7 +22,7 @@ class ProductController extends Controller
        ],200);
     }
 
-    public function store(ProductStoreRequest $request)
+    public function store(ProductStoreRequest $request): JsonResponse
     {
         if(auth()->user()){
             $imageName = Str::random(32).".".$request->image->getClientOriginalExtension();
@@ -48,7 +49,7 @@ class ProductController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(int $id): JsonResponse
     {
         // Product Detail
         $product = Product::find($id);
@@ -64,7 +65,7 @@ class ProductController extends Controller
         ],200);
     }
 
-    public function update(ProductStoreRequest $request, $id)
+    public function update(ProductStoreRequest $request, $id): JsonResponse
     {
         // Find product
         $product = Product::find($id);
@@ -107,7 +108,7 @@ class ProductController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         // Detail
         $product = Product::find($id);

@@ -5,51 +5,44 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Review;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('auth');
+        $this->middleware('auth');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
 
-    public function index()
+    public function index(): JsonResponse
     {
-       // All Product
-       $review = Review::all();
-
-       // Return Json Response
-       return response()->json([
-          'review' => $review
-       ],200);
-    }
-
-    public function show($id)
-    {
-        // Product Detail
-        $review =  Review::find($id);
-        if(!$review){
-            return response()->json([
-                'message'=>'Product Not Found.'
-            ], 404);
-        }
+        // All Product
+        $review = Review::all();
 
         // Return Json Response
         return response()->json([
             'review' => $review
-        ],200);
+        ], 200);
     }
 
-    public function store(Request $request, Product $product)
+    public function show(int $id): JsonResponse
+    {
+        // Product Detail
+        $review =  Review::find($id);
+        if (!$review) {
+            return response()->json([
+                'message' => 'Product Not Found.'
+            ], 404);
+        }
+        return response()->json([
+            'review' => $review
+        ], 200);
+
+    }
+
+    public function store(Request $request, Product $product): JsonResponse
     {
         $request->validate([
             'review' => 'required|string',
@@ -60,8 +53,8 @@ class ReviewController extends Controller
 
         $findReview = Review::where(['user_id' => $userId, 'product_id' => $product->id])->first();
 
-        if($findReview) {
-            return response()->json(['message' => 'You already reviewed this product']);;
+        if ($findReview) {
+            return response()->json(['message' => 'You already reviewed this product']);
         }
 
         $review = Review::create([
@@ -74,15 +67,8 @@ class ReviewController extends Controller
         return response()->json($review);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,  Review $review)
+
+    public function update(Request $request,  Review $review): JsonResponse
     {
         if (auth()->user()->id !== $review->user_id) {
             return response()->json(['message' => 'Action Forbidden']);
@@ -99,14 +85,7 @@ class ReviewController extends Controller
         return response()->json(['message' => 'Review Updated', 'review' => $review]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product, Review $review)
+    public function destroy(Product $product, Review $review): JsonResponse
     {
         if (auth()->user()->id !== $review->user_id) {
             return response()->json(['message' => 'Action Forbidden']);
@@ -115,5 +94,3 @@ class ReviewController extends Controller
         return response()->json(['message' => 'Review Deleted', 'review' => $review]);
     }
 }
-
-

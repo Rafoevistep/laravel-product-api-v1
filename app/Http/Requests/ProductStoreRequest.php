@@ -14,7 +14,7 @@ class ProductStoreRequest extends FormRequest
 
         public function rules()
         {
-            if(request()->isMethod('post')) {
+            if(request()->isMethod('product')) {
                 return [
                     'name' => 'required|string|max:258',
                     'price' => 'integer|min:1',
@@ -33,7 +33,7 @@ class ProductStoreRequest extends FormRequest
 
         public function messages()
         {
-            if(request()->isMethod('post')) {
+            if(request()->isMethod('product')) {
                 return [
                     'name.required' => 'Name is required!',
                     'image.required' => 'Image is required!',
