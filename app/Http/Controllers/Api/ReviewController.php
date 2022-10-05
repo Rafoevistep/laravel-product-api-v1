@@ -33,7 +33,7 @@ class ReviewController extends Controller
         $review =  Review::find($id);
         if (!$review) {
             return response()->json([
-                'message' => 'Product Not Found.'
+                'message' => 'Review Not Found.'
             ], 404);
         }
         return response()->json([
