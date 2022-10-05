@@ -30,7 +30,7 @@ class ReviewController extends Controller
     public function show(int $id): JsonResponse
     {
         // Product Detail
-        $review =  Review::find($id);
+        $review = Review::where(['product_id' => $id])->get();
         if (!$review) {
             return response()->json([
                 'message' => 'Review Not Found.'
@@ -68,7 +68,7 @@ class ReviewController extends Controller
     }
 
 
-    public function update(Request $request,  Review $review): JsonResponse
+    public function update(Request $request, Review $review): JsonResponse
     {
         if (auth()->user()->id !== $review->user_id) {
             return response()->json(['message' => 'Action Forbidden']);
@@ -93,4 +93,5 @@ class ReviewController extends Controller
         $review->delete();
         return response()->json(['message' => 'Review Deleted', 'review' => $review]);
     }
+
 }
