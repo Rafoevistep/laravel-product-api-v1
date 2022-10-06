@@ -9,6 +9,10 @@ class Review extends Model
 {
     use HasFactory;
 
+    /**
+     * @var mixed
+     */
+
     protected  $fillable = [
         'review',
         'rating',

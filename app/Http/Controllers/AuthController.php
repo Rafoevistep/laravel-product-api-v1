@@ -32,7 +32,7 @@ class AuthController extends Controller
     public function show(int $id): JsonResponse
     {
         // Single User Detail
-        $user =  User::find($id);
+        $user = User::find($id);
         if (!$user) {
             return response()->json([
                 'message' => 'User Not Found.'
