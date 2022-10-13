@@ -3,7 +3,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Support\Str;
@@ -25,7 +24,7 @@ class ProductController extends Controller
        // Return Json Response
        return response()->json([
           'products' => $products
-       ],200);
+       ]);
     }
 
     public function store(ProductStoreRequest $request): JsonResponse
@@ -38,7 +37,7 @@ class ProductController extends Controller
                 'user_id' => auth()->user()->id,
                 'name' => $request->name,
                 'image' => $imageName,
-                'price' => $request->price,
+                'price' => '$'. number_format($request->price),
                 'description' => $request->description
             ]);
 
@@ -66,9 +65,8 @@ class ProductController extends Controller
         }
 
         // Return Json Response
-        return response()->json([
-            'product' => $product
-        ],200);
+        return response()->json($product,200);
+
     }
 
     public function update(ProductStoreRequest $request, $id): JsonResponse
@@ -108,9 +106,7 @@ class ProductController extends Controller
             // Update Product
             $product->save();
 
-            return response()->json([
-                $product
-            ],200);
+            return response()->json($product);
         }
     }
 
@@ -140,7 +136,7 @@ class ProductController extends Controller
         // Return Json Response
         return response()->json([
             'message' => "Product successfully deleted."
-        ],200);
+        ]);
         }
     }
 }

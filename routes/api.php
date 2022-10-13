@@ -54,4 +54,4 @@ Route::controller(ReviewController::class)->group(function() {
     Route::delete('/review/{review}', 'destroy');
 });
 
-Route::get('/scraping-product', [\App\Http\Controllers\Api\ScrapeItems::class, 'scrape_all_posts']);
+Route::get('/scraping-product/{id}', [\App\Http\Controllers\Api\ScrapeItems::class, 'scrape_all_posts']);

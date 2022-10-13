@@ -17,14 +17,14 @@ class ProductStoreRequest extends FormRequest
             if(request()->isMethod('product')) {
                 return [
                     'name' => 'required|string|max:258',
-                    'price' => 'integer|min:1',
+                    'price' => 'string|min:1',
                     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                     'description' => 'required|string'
                 ];
             } else {
                 return [
                     'name' => 'required|string|max:258',
-                    'price' => 'integer|min:1',
+                    'price' => 'string|min:1',
                     'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                     'description' => 'required|string'
                 ];
