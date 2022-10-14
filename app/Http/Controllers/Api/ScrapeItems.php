@@ -58,7 +58,6 @@ class ScrapeItems extends Controller
                     $eurUpd = mb_substr($name, 1);
                     $eurUpd = str_replace(",", "", $eurUpd) * $euroTotal;
                     $name = $itemData['price'] = '$' . number_format($eurUpd);
-                    dd($name);
                 }
 
                 $rubTotal = $rub / $amd;
