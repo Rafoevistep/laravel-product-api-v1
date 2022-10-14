@@ -126,7 +126,7 @@ class ProductController extends Controller
             // Public storage
         $storage = Storage::disk('public');
 
-        // Iamge delete
+        // Image delete
         if($storage->exists($product->image))
             $storage->delete($product->image);
 

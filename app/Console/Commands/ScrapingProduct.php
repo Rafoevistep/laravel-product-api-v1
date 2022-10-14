@@ -27,9 +27,9 @@ class ScrapingProduct extends Command
 
         //for local
         $curl->get('http://127.0.0.1:8000/api/scraping-product/1');
-        //for heroko
+        //for heroku app
 
-//        $curl->get('https://laravel-products-api.herokuapp.com/api/scraping-product/1');
+        //$curl->get('https://laravel-products-api.herokuapp.com/api/scraping-product/1');
 
         echo 'Scraping Successfully completed  ';
 

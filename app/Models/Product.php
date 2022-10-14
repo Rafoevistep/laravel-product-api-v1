@@ -20,7 +20,7 @@ class Product extends Model
 
 
 
-    public function reviews()
+    public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\Review');
     }
@@ -28,7 +28,7 @@ class Product extends Model
     /**
      * Get the user that added the product.
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\User');
     }

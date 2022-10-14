@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Curl\Curl;
+use Illuminate\Http\JsonResponse;
 use voku\helper\HtmlDomParser;
 use Illuminate\Support\Facades\DB;
 
 
 class ScrapeItems extends Controller
 {
-    public function scrape_all_posts(): string
+    public function scrape_all_posts(): JsonResponse
     {
 
         $curl = new Curl();
@@ -69,7 +70,6 @@ class ScrapeItems extends Controller
 
                 $strRub = $name;
                 $patternRub = "/руб./i";
-
                 $rubTotal = $rub / $amd;
 
                 if ((preg_match($patternRub, $strRub))) {

@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules\Password as RulesPassword;
 
 class NewPasswordController extends Controller
 {
-    public function forgotPassword(Request $request)
+    public function forgotPassword(Request $request): array
     {
         $request->validate([
             'email' => 'required|email',

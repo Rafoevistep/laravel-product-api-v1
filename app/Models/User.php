@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -61,7 +62,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims(): array
+    {
         return [];
     }
 
@@ -76,7 +78,7 @@ class User extends Authenticatable implements JWTSubject
      /**
     * Get the products the user has added.
     */
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany('App\Product');
     }
@@ -84,7 +86,7 @@ class User extends Authenticatable implements JWTSubject
     /**
     * Get the reviews the user has made.
     */
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany('App\Review');
     }
