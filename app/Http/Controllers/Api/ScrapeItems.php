@@ -16,7 +16,7 @@ class ScrapeItems extends Controller
 
         $curl = new Curl();
 
-        for ($id = 1; $id < 100; $id++) {
+        for ($id = 1; $id < 50; $id++) {
 
             $curl->get('https://www.list.am/category/23/' . $id . '?type=1&po=1&n=0&bid=0&price1=100&price2=&crc=-1&_a27=0&_a2_1=&_a2_2=&_a1_1=&_a1_2=&_a15=0&_a28_1=&_a28_2=&_a13=0&_a23=0&_a43=0&_a22=0&_a16=0');
 
@@ -64,9 +64,8 @@ class ScrapeItems extends Controller
 
                 if ((preg_match("/руб./i", $name))) {
                     $rubUpd = str_replace(" руб.", "", $name);
-                    $var4 = str_replace(",", "", $rubUpd);
-                    $rubUpd = '$' . number_format($var4 * $rubTotal);
-                    $name = $itemData['price'] = $rubUpd;
+                    $rubUpd = str_replace(",", "", $rubUpd) * $rubTotal;
+                    $name = $itemData['price'] =  '$' . number_format($rubUpd);
                 }
 
                 $itemDataList[] = [
